@@ -22,8 +22,9 @@ const output = document.getElementById("output");
 
 
 let displayValue = "";
-let storedNumber1 = ""
-let storedNumber2 = ""
+let storedNumber1 = "";
+let storedNumber2 = "";
+let operator = "";
 let result = 0;
 
 
@@ -44,7 +45,6 @@ const divide = function(num1, num2) {
     return round(value, 2);
 }
 
-
 //rounds the value to the number called by precision
 function round(value, precision) {
     var multiplier = Math.pow(10, precision || 0);
@@ -52,30 +52,13 @@ function round(value, precision) {
 }
 
 //takes a number and stores it in the correct variable to be called later
-function storeNumber() {
-    
-    // storedNumber1 = displayValue.substring(0, displayValue.indexOf(" +"));
-    // storedNumber2 = displayValue.substring(displayValue.indexOf("+ ") + 2);
+const storeNumber = function() {
 
-    // storedNumber1 = displayValue.substring(0, displayValue.indexOf(/[\+-/*](.+)/g));
-    // storedNumber2 = /\W{3}(.+)/g.exec(displayValue)[1];
-
-    // storedNumber1 = displayValue.substring(/\W{3}(.+)/g, + 1);
-    // storedNumber2 = displayValue.substring(displayValue.indexOf(/\W{3}(.+)/g) + 3);
+    const [storedNumber1, storedNumber2] = displayValue.split(/\W{3}(.+)/g);
 
     //Store using an array to return multiple values
     return [storedNumber1, storedNumber2]
 }
-
-//Allows the function values stored in storeNumber to be called 
-let storedNumbers = storeNumber();
-let firstNumber = storedNumbers[0];
-let secondNumber = storedNumbers[1];
-
-// let test = "8 + 4";
-// test = /\W{3}(.+)/g.exec(test)[1];
-// console.log(test);
-
 
 const operate = function(num1, num2, operator) {
     
@@ -154,7 +137,8 @@ nine.addEventListener('click', () => {
 
 addBtn.addEventListener('click', () => {
     console.log("Add two numbers");
-    displayValue += " + "
+    displayValue += " + ";
+    operator = "+";
     storeNumber();
     display();
 })
@@ -162,27 +146,31 @@ addBtn.addEventListener('click', () => {
 subtractBtn.addEventListener('click', () => {
     console.log("Subtract two numbers");
     displayValue += " - "
+    operator = "-";
     storeNumber();
     display();
 })
 
 multiplyBtn.addEventListener('click', () => {
     console.log("Multiply two numbers");
-    displayValue += " * "
+    displayValue += " * ";
+    operator = "*";
     storeNumber();
     display();
 })
 
 divisionBtn.addEventListener('click', () => {
     console.log("Divide two numbers");
-    displayValue += " / "
+    displayValue += " / ";
+    operator = "/";
     storeNumber();
     display();
 })
 
 clearBtn.addEventListener('click', () => {
-    console.log("Clear all numbers");
-    display();
+    result = 0;
+    displayValue = "";
+    displayTotal();
 })
 
 decimalBtn.addEventListener('click', () => {
@@ -193,16 +181,16 @@ decimalBtn.addEventListener('click', () => {
 })
 
 equalBtn.addEventListener('click', () => {
-    console.log("Run the provided equation");
-    storeNumber();
-    console.log(storedNumber1);
-    console.log(storedNumber2);
-    operate(storedNumber1, storedNumber2, "-");
+    
+    //Allows the function values stored in storeNumber to be called 
+    let storedNumbers = storeNumber();
+    storedNumbers;
+    let firstNumber = storedNumbers[0];
+    let secondNumber = storedNumbers[1];
+
+    operate(firstNumber, secondNumber, operator);
     displayTotal();
-
 })
-
-// console.log(operate(7, 2, "/"));
 
 //to run on click of any button and update the display
 const display = function() {
