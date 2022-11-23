@@ -190,6 +190,7 @@ equalBtn.addEventListener('click', () => {
 
     operate(firstNumber, secondNumber, operator);
     displayTotal();
+    displayValue = "";
 })
 
 //to run on click of any button and update the display
